@@ -4,87 +4,94 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>한국 사회의 시간 배분과 생활구조 변화</title>
-<meta name="description" content="6개 모델의 원문 주장 33건, 관심 벡터 29행, 조기 신호 지표 12종, 10년 선택경로 4종을 자동 확정 스냅샷으로 공개합니다. 자동 계산·사람 미검토·외부 검증 전.">
+<meta name="description" content="6개 모델의 원문 주장 33건, 관심 벡터 29행, 조기 신호 지표 12종, 10년 선택경로 4종을 자동 확정 스냅샷으로 기록합니다. 자동 계산·사람 미검토·외부 검증 전.">
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <a class="skip" href="#main">본문으로</a>
 
+<!-- 6장 DisclaimerHeader · 44px 고정 바 -->
+<div class="bar" role="banner">
+  <div class="wrap">
+    <span class="ref mono" id="bar-ref"></span>
+    <span class="stack" id="bar-badges"></span>
+  </div>
+</div>
+
 <header class="top">
   <div class="wrap">
-    <p class="eyebrow" id="index-title">대한민국 여가시간 80% 분석</p>
-    <h1>한국 사회의 시간 배분과<br>생활구조 변화</h1>
-    <p class="lede">업무 자동화로 줄어든 시간이 어디로 가는지를, 6개 모델의 원문 주장과 공식 통계 후보값으로 나누어 기록합니다. 이 화면은 결론이 아니라 <strong>무엇을 아직 모르는지</strong>를 보여 주는 계기판입니다.</p>
-    <p class="badges" id="state-badges"></p>
+    <p class="hypothesis" id="hypothesis"></p>
+    <h1>한국 사회의 시간 배분과 생활구조 변화</h1>
+    <p class="sub">이 화면은 결론을 내리지 않습니다. 아래 다섯 개의 질문에 대해 <strong>지금 어디까지 확인되었고 무엇이 비어 있는지</strong>만 기록합니다.</p>
+    <ol class="questions" id="questions"></ol>
     <dl class="counts" id="counts"></dl>
   </div>
 </header>
 
-<div class="notice" role="note">
-  <div class="wrap"><p id="disclaimer"></p></div>
-</div>
-
-<nav class="tabs" aria-label="화면 이동">
+<main id="main">
   <div class="wrap">
-    <a href="#paths">10년 선택경로</a>
-    <a href="#indicators">조기 신호 지표</a>
-    <a href="#vectors">모델 관심 벡터</a>
-    <a href="#claims">주장 원장</a>
-    <a href="#rules">읽는 법</a>
+
+    <section id="hypothesis-note">
+      <h2>색인용 가설에 대하여</h2>
+      <p class="note" id="hypothesis-explainer"></p>
+    </section>
+
+    <section id="paths">
+      <h2>10년 선택경로</h2>
+      <p class="note">경로는 “어떤 조건을 추적할 것인가”를 뜻합니다. 해당 경로가 이미 현실화되었다는 판정이 아닙니다. 직접값이 한 건도 확보되지 않은 동안 네 경로의 현재 판정은 모두 판정 보류입니다. 판정값은 배지로만 표시하며 굵기·크기로 차등하지 않습니다.</p>
+      <div class="cards" id="path-cards"></div>
+    </section>
+
+    <section id="indicators">
+      <h2>조기 신호 지표</h2>
+      <p class="note">값 종류가 미확보인 지표는 값 자리에 해칭 바와 “미확보” 라벨이 놓입니다. 숫자 0이나 하이픈으로 대체하지 않습니다. 근처에서 관측된 수치는 참고 단서 칸에만 적고 그 지표의 값으로 쓰지 않습니다. 카드 순서는 지표 정의 순서이며 값 종류로 정렬하지 않습니다.</p>
+      <div class="filters" id="indicator-filters" role="group" aria-label="값 종류 걸러 보기"></div>
+      <p class="count-line" id="indicator-count" aria-live="polite"></p>
+      <div class="rows" id="indicator-rows"></div>
+    </section>
+
+    <section id="vectors">
+      <h2>모델 관심 벡터</h2>
+      <p class="note">각 모델이 원문에서 어느 관심 영역에 무게를 두었는지를 비중으로 환산한 값입니다. 색은 관심 영역만 가리키며 아홉 색은 같은 명도로 맞춰 어느 영역도 더 눈에 띄지 않게 했습니다. 모델은 색이 아니라 형태와 라벨로 구분합니다. 면적이 크다고 더 중요한 영역이 아닙니다. 모든 막대에는 같은 페이지에 표 대체본이 있습니다.</p>
+      <div class="models" id="model-cards"></div>
+    </section>
+
+    <section id="claims">
+      <h2>주장 원장</h2>
+      <p class="note">원문 주장은 바탕체로, 편집 산출물인 정규화 주장은 돋움체로 조판합니다. 서체가 층위를 표시하므로 정규화 문장만 따로 떼어 읽을 수 없습니다. 33건 모두 검증 전·판정 대기 상태입니다.</p>
+      <div class="filters" id="claim-filters" role="group" aria-label="주장 걸러 보기"></div>
+      <p class="count-line" id="claim-count" aria-live="polite"></p>
+      <div class="rows" id="claim-rows"></div>
+    </section>
+
+    <section id="rules">
+      <h2>읽는 법과 표시 규칙</h2>
+      <ol class="rules" id="display-rules"></ol>
+
+      <h3>값 종류의 뜻</h3>
+      <dl class="glossary">
+        <dt>직접값</dt><dd>그 지표의 정의에 정확히 대응하는 공식 수치. 현재 0건입니다.</dd>
+        <dt>대체값</dt><dd>정의가 일부만 겹치는 다른 조사·연구의 수치. 해당 지표의 값으로 승격되지 않았습니다.</dd>
+        <dt>간접 단서</dt><dd>방향만 시사하는 자료. 수준이나 비율을 읽어 내지 않습니다.</dd>
+        <dt>미확보</dt><dd>대응 수치가 없습니다. 값 자리에 해칭 바를 두고 참고 단서만 남깁니다.</dd>
+      </dl>
+
+      <h3>이 화면이 아직 담지 못한 것</h3>
+      <dl class="glossary" id="not-yet"></dl>
+
+      <h3>자료 출처</h3>
+      <p class="note" id="provenance"></p>
+    </section>
+
   </div>
-</nav>
-
-<main id="main" class="wrap">
-
-  <section id="paths">
-    <h2>10년 선택경로</h2>
-    <p class="section-note">경로는 “어떤 조건을 추적할 것인가”를 뜻합니다. 해당 경로가 이미 현실화되었다는 판정이 아닙니다. 직접값이 한 건도 확보되지 않은 동안 네 경로의 현재 판정은 모두 <strong>판정 보류</strong>로 고정됩니다.</p>
-    <div class="cards" id="path-cards"></div>
-  </section>
-
-  <section id="indicators">
-    <h2>조기 신호 지표</h2>
-    <p class="section-note">값 종류가 <strong>미확보</strong>인 지표는 현재값 칸을 비워 둡니다. 근처에서 관측된 수치는 참고 단서 칸에만 적고, 그 지표의 값으로 쓰지 않습니다.</p>
-    <div class="kindbar" id="kind-summary"></div>
-    <div class="filters" id="indicator-filters" role="group" aria-label="값 종류 걸러 보기"></div>
-    <div class="rows" id="indicator-rows"></div>
-  </section>
-
-  <section id="vectors">
-    <h2>모델 관심 벡터</h2>
-    <p class="section-note">각 모델이 원문에서 어느 관심 영역에 무게를 두었는지를 비중으로 환산한 값입니다. 모델별 비중 합계는 1이며, 이는 계산의 정합성일 뿐 사회적 중요도의 순위가 아닙니다.</p>
-    <div class="models" id="model-cards"></div>
-  </section>
-
-  <section id="claims">
-    <h2>주장 원장</h2>
-    <p class="section-note">원문 주장과 정규화 주장을 함께 둡니다. 정규화는 비교를 위한 것이고, 판단의 근거는 언제나 원문 쪽입니다. 33건 모두 <strong>검증 전·판정 대기</strong> 상태입니다.</p>
-    <div class="filters" id="claim-filters" role="group" aria-label="주장 걸러 보기"></div>
-    <p class="result-count" id="claim-count" aria-live="polite"></p>
-    <div class="rows" id="claim-rows"></div>
-  </section>
-
-  <section id="rules">
-    <h2>읽는 법과 표시 규칙</h2>
-    <ol class="rules" id="display-rules"></ol>
-    <h3>값 종류의 뜻</h3>
-    <dl class="glossary">
-      <dt>직접값</dt><dd>그 지표의 정의에 정확히 대응하는 공식 수치. 현재 <strong>0건</strong>입니다.</dd>
-      <dt>대체값</dt><dd>정의가 일부만 겹치는 다른 조사·연구의 수치. 해당 지표의 값으로 승격되지 않았습니다.</dd>
-      <dt>간접 단서</dt><dd>방향만 시사하는 자료. 수준이나 비율을 읽어 내지 않습니다.</dd>
-      <dt>미확보</dt><dd>대응 수치가 없습니다. 현재값 칸을 비우고 참고 단서만 남깁니다.</dd>
-    </dl>
-    <h3>자료 출처</h3>
-    <p class="section-note" id="provenance"></p>
-  </section>
-
 </main>
 
 <footer class="foot">
   <div class="wrap">
+    <p class="fixed">이 화면은 파생 화면이며 기준본을 수정하지 않는다.</p>
     <p id="footer-meta"></p>
-    <p class="fine">이 화면의 공개·배포·정본 승격은 수동 승인 항목(M)입니다. 자동으로 갱신되지 않습니다.</p>
+    <p>공개·배포·정본 승격은 수동 승인 항목(M)입니다. 자동으로 갱신되지 않습니다.</p>
   </div>
 </footer>
 
