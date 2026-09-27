@@ -50,6 +50,7 @@ function buildSnapshot() {
   const indicators = Array.from({ length: 12 }, (_, i) => ({
     indicatorId: `I${String(i + 1).padStart(2, '0')}`,
     currentValue: null, valueKind: '미확보',
+    referenceClue: '참고 단서 자리',
   }));
 
   const meta = { disclaimer: '자동 계산·사람 미검토·외부 검증 전' };
@@ -133,7 +134,31 @@ try {
   const src = run(srcDir);
   expect('원문·출처 결측 → 차단', src.code === 1 && /원문·출처/.test(src.out), `종료 코드 ${src.code}`);
 
-  // 8. 메타 표지가 없으면 차단
+  // 8. 미확보인데 현재값 칸에 값이 있으면 차단
+  const badSlot = buildSnapshot();
+  badSlot.indicators[2].currentValue = '33.1%';
+  const slotDir = path.join(root, 'bad-slot');
+  await writeSnapshot(slotDir, badSlot);
+  const slot = run(slotDir);
+  expect('미확보 현재값 점유 → 차단', slot.code === 1 && /현재값 칸 금지/.test(slot.out), `종료 코드 ${slot.code}`);
+
+  // 9. 미확보인데 참고 단서가 없으면 차단
+  const badClue = buildSnapshot();
+  delete badClue.indicators[3].referenceClue;
+  const clueDir = path.join(root, 'bad-clue');
+  await writeSnapshot(clueDir, badClue);
+  const clue = run(clueDir);
+  expect('미확보 참고 단서 결측 → 차단', clue.code === 1 && /참고 단서 필수/.test(clue.out), `종료 코드 ${clue.code}`);
+
+  // 10. 직접값이 하나도 없는데 경로를 판정하면 차단
+  const badPath = buildSnapshot();
+  badPath.paths[3].currentJudgment = '경보';
+  const pathDir = path.join(root, 'bad-path');
+  await writeSnapshot(pathDir, badPath);
+  const pathRes = run(pathDir);
+  expect('직접값 0 · 경로 판정 → 차단', pathRes.code === 1 && /판정 보류/.test(pathRes.out), `종료 코드 ${pathRes.code}`);
+
+  // 11. 메타 표지가 없으면 차단
   const badMeta = buildSnapshot();
   badMeta.meta.disclaimer = '검증 완료';
   const metaDir = path.join(root, 'bad-meta');

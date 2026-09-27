@@ -1,0 +1,68 @@
+[
+  {
+    "modelId": "M01",
+    "label": "조직 평가·가짜 일·시간 자본",
+    "sessionPair": "S01 · GPT 쌍",
+    "observedStructure": "조직 평가·가짜 일·시간 자본 격차·숙의 역할",
+    "conditionalPaths": ["P01", "P04"],
+    "keySignals": ["I04", "I05", "I07"],
+    "claimCount": 4,
+    "vectorCount": 3,
+    "sourceStatus": "full"
+  },
+  {
+    "modelId": "M02",
+    "label": "근면 패러다임·조직 목적·교육 전환",
+    "sessionPair": "S02 · Gemini 쌍",
+    "observedStructure": "근면 패러다임·조직 목적·교육 전환·물리 경험",
+    "conditionalPaths": ["P01", "P02", "P04"],
+    "keySignals": ["I03", "I05", "I06", "I10"],
+    "claimCount": 4,
+    "vectorCount": 4,
+    "sourceStatus": "full"
+  },
+  {
+    "modelId": "M03",
+    "label": "숙련 사다리·지역 행정·돌봄",
+    "sessionPair": "S03 · Opus 쌍",
+    "observedStructure": "숙련 사다리·지역 행정·돌봄·공백의 세 경로",
+    "conditionalPaths": ["P01", "P03", "P04"],
+    "keySignals": ["I06", "I08", "I11", "I12"],
+    "claimCount": 9,
+    "vectorCount": 8,
+    "sourceStatus": "full"
+  },
+  {
+    "modelId": "M04",
+    "label": "노동시장 분화·공공 책임",
+    "sessionPair": "S01 · GPT 쌍",
+    "observedStructure": "노동시장 분화·시간 사용 격차·공공 책임",
+    "conditionalPaths": ["P01", "P04"],
+    "keySignals": ["I02", "I07", "I11"],
+    "claimCount": 5,
+    "vectorCount": 4,
+    "sourceStatus": "full"
+  },
+  {
+    "modelId": "M05",
+    "label": "문제 정의·경험경제·공동체",
+    "sessionPair": "S02 · Gemini 쌍",
+    "observedStructure": "문제 정의·교육·경험경제·공동체",
+    "conditionalPaths": ["P01", "P02", "P03"],
+    "keySignals": ["I06", "I09", "I10", "I12"],
+    "claimCount": 4,
+    "vectorCount": 4,
+    "sourceStatus": "full"
+  },
+  {
+    "modelId": "M06",
+    "label": "직무 정의·숙련 경로·생산성 배분",
+    "sessionPair": "S03 · Opus 쌍",
+    "observedStructure": "직무 정의·숙련 경로·생산성 배분·공백 전환",
+    "conditionalPaths": ["P01", "P04"],
+    "keySignals": ["I02", "I04", "I06", "I07"],
+    "claimCount": 7,
+    "vectorCount": 6,
+    "sourceStatus": "full"
+  }
+]

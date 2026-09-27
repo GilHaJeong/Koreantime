@@ -112,10 +112,31 @@ function checkIndicatorValues(indicators) {
     .map((i) => `${i.indicatorId}:${i.valueKind}`);
   record('값 없음이면 미확보', nullMismatch.length === 0, nullMismatch.length ? nullMismatch.join(', ') : '위반 없음');
 
+  const clueMismatch = indicators
+    .filter((i) => i.valueKind === '미확보' && i.currentValue !== null && i.currentValue !== undefined)
+    .map((i) => i.indicatorId);
+  record('미확보는 현재값 칸 금지', clueMismatch.length === 0, clueMismatch.length ? clueMismatch.join(', ') : '위반 없음');
+
+  const clueMissing = indicators
+    .filter((i) => i.valueKind === '미확보' && !i.referenceClue)
+    .map((i) => i.indicatorId);
+  record('미확보는 참고 단서 필수', clueMissing.length === 0, clueMissing.length ? clueMissing.join(', ') : '결측 없음');
+
   const placeholder = indicators
     .filter((i) => i.currentValue === 0 || i.currentValue === '' || i.currentValue === '-')
     .map((i) => i.indicatorId);
   record('0·하이픈·빈문자 대체 금지', placeholder.length === 0, placeholder.length ? placeholder.join(', ') : '위반 없음');
+}
+
+function checkPathJudgment(paths, indicators) {
+  if (!Array.isArray(paths) || !Array.isArray(indicators)) return;
+  const direct = indicators.filter((i) => i.valueKind === '직접값').length;
+  if (direct > 0) {
+    record('직접값 없으면 판정 보류', true, `직접값 ${direct}건 · 규칙 미적용`);
+    return;
+  }
+  const decided = paths.filter((p) => p.currentJudgment !== '판정 보류').map((p) => p.pathId);
+  record('직접값 없으면 판정 보류', decided.length === 0, decided.length ? decided.join(', ') : '위반 없음');
 }
 
 function checkMeta(meta) {
@@ -151,6 +172,7 @@ checkModelIds(data.vectors, 'vectors');
 checkModelIds(data.claims, 'claims');
 checkClaimSources(data.claims);
 checkIndicatorValues(data.indicators);
+checkPathJudgment(data.paths, data.indicators);
 checkMeta(data.meta);
 
 const failed = results.filter((r) => !r.ok);
