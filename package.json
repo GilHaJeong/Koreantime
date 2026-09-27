@@ -9,6 +9,7 @@
     "test": "node scripts/verify-snapshot.test.mjs",
     "build": "node scripts/verify-snapshot.mjs && node scripts/build-site.mjs",
     "serve": "node scripts/serve.mjs",
-    "check": "npm run test && npm run build"
+    "check": "npm run test && npm run build",
+    "fonts": "node scripts/build-fonts.mjs"
   }
 }

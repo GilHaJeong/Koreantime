@@ -483,13 +483,23 @@
     ['이해관계층 보기 (StakeholderView)', '8종 이해관계층 필터는 아직 없습니다. 지표 DB에 이해관계층 값은 있으나 화면에 연결하지 않았습니다.'],
     ['경로 시간축 (PathTimeline)', 'P01~P04를 4국면 수평 축으로 놓는 화면은 아직 없습니다. 현재는 카드로만 제공합니다.'],
     ['접근성 실측', '본문 대비비 4.5:1, 배지 3:1, 영역 9색의 색각 구분 가능성, 해칭 패턴의 축소 내성은 모두 미실측입니다.'],
-    ['서체 로딩', 'Noto Serif KR · Noto Sans KR · DM Mono를 지정했으나 로딩 방식(자체 호스팅·외부 CDN)이 미결이라 웹폰트를 내려받지 않습니다. 서체가 없는 환경에서는 바탕·돋움·고정폭 계열로 층위만 유지됩니다.'],
-    ['다크 보조 테마', '계약 10장에서 제공 여부가 미결이므로 토큰만 정의하고 자동 추종은 붙이지 않았습니다. 활성화하려면 사람이 html 요소에 data-theme="dark"를 붙여야 합니다.'],
+  ];
+
+  /* 계약 10장 미결 항목 중 2026-09-27 설계자 지정으로 닫힌 것 */
+  const DECIDED = [
+    ['다크 테마 · 미제공', '보조 테마를 제공하지 않습니다. 라이트 한 벌만 유지하므로 다크에서만 성립하는 표현이 생길 수 없고, 인쇄·흑백 캡처 조건이 기본 테마와 그대로 일치합니다.'],
+    ['서체 · 자체 호스팅', 'Noto Serif KR · Noto Sans KR · DM Mono를 저장소 안에 두고 씁니다. 화면을 여는 시점에 외부 CDN을 호출하지 않으므로 열람 기록이 밖으로 나가지 않습니다. 한글 전체 서브셋은 Noto Serif KR 3굵기만 약 22MB라 담지 않고, 이 화면이 쓰는 글자만 추려 7개 파일 361KB로 줄였습니다. 스냅샷 문구가 바뀌면 서체를 다시 만들어야 합니다.'],
   ];
   const notYet = $('not-yet');
   for (const [k, v] of NOT_YET) {
     notYet.appendChild(el('dt', null, k));
     notYet.appendChild(el('dd', null, v));
+  }
+
+  const decided = $('decided');
+  for (const [k, v] of DECIDED) {
+    decided.appendChild(el('dt', null, k));
+    decided.appendChild(el('dd', null, v));
   }
 
   $('provenance').textContent =
