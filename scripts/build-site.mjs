@@ -19,8 +19,10 @@ for (const name of FILES) {
   snapshot[name] = JSON.parse(await readFile(path.join(SNAPSHOT_DIR, `${name}.json`), 'utf8'));
 }
 
+/* 빌드 시각을 넣지 않는다. 같은 스냅샷이면 언제 돌려도 같은 파일이 나와야
+   CI 에서 "커밋된 번들이 스냅샷과 일치하는가"를 검사할 수 있다.
+   화면에 필요한 시각은 meta.snapshotDate 이지 빌드 시각이 아니다. */
 snapshot.buildInfo = {
-  builtAt: new Date().toISOString(),
   snapshotDir: SNAPSHOT_DIR,
   gate: 'scripts/verify-snapshot.mjs 통과본',
 };

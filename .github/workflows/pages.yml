@@ -1,0 +1,92 @@
+# 공개 화면 배포
+#
+# 공개·배포는 자동화 등급 M(수동 승인 필수) 항목이다.
+# 이 워크플로는 사람이 GitHub Pages 를 켜고 기본 브랜치에 올렸을 때만 돈다.
+# 게이트가 실패하면 배포 단계에 도달하지 않는다. 값을 보정하지 않고 멈춘다.
+
+name: 공개 화면 배포
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 배포는 한 번에 하나만. 진행 중인 배포를 중간에 끊지 않는다.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: 검증 게이트
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 게이트 시험 11건
+        run: node scripts/verify-snapshot.test.mjs
+
+      - name: 스냅샷 검증 게이트
+        run: node scripts/verify-snapshot.mjs
+
+      - name: 화면 번들 재생성
+        run: node scripts/build-site.mjs
+
+      - name: 커밋된 번들이 스냅샷과 일치하는지 확인
+        run: |
+          if ! git diff --exit-code assets/snapshot.js; then
+            echo "::error::커밋된 assets/snapshot.js 가 data/snapshot 과 다릅니다."
+            echo "::error::npm run build 를 돌리고 결과를 커밋한 뒤 다시 올리십시오."
+            exit 1
+          fi
+
+      - name: 자체 호스팅 서체가 들어 있는지 확인
+        run: |
+          missing=0
+          for f in noto-serif-kr-400 noto-serif-kr-500 noto-serif-kr-600 \
+                   noto-sans-kr-400 noto-sans-kr-500; do
+            [ -f "assets/fonts/$f.woff2" ] || { echo "::error::서체 누락 $f.woff2"; missing=1; }
+          done
+          ls assets/fonts/dm-mono-400-*.woff2 >/dev/null 2>&1 \
+            || { echo "::error::서체 누락 dm-mono-400"; missing=1; }
+          exit $missing
+
+      - name: 외부 CDN 호출이 남아 있지 않은지 확인
+        run: |
+          if grep -rn "fonts.googleapis.com\|fonts.gstatic.com" index.html assets/*.css assets/app.js; then
+            echo "::error::서체 로딩 결정은 자체 호스팅입니다. 런타임 외부 호출을 지우십시오."
+            exit 1
+          fi
+
+      - name: 공개 산출물 모으기
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp -r assets _site/
+          cp -r data _site/
+          cp README.md _site/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: 배포
+    needs: verify
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Pages 로 배포
+        id: deployment
+        uses: actions/deploy-pages@v4
